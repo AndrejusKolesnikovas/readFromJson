@@ -105,7 +105,7 @@ function addNewElement(event) {
   // const country = addUsersForm.querySelector('#valstybe');
   const country = addUsersForm.querySelector('#valstybe');
   const birthday = addUsersForm.querySelector('#gimimodata');
-  const newId = getNewId();
+  const newId = getNewId(name.value[0], surname.value[0]);
   const newDate = new Date();
 
   const user = {
@@ -126,9 +126,10 @@ function addNewElement(event) {
   country.value = '';
 }
 
-function getNewId() {
-  const idsArray = users.map((user) => user.id);
-  return Math.max(...idsArray) + 1;
+function getNewId(charA, charB) {
+  // const idsArray = users.map((user) => user.id);
+  // return Math.max(...idsArray) + 1;
+  return `${charA}${charB}${Math.floor(Math.random()*1000)}`
 }
 
 function appendFoot() {
