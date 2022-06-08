@@ -136,7 +136,7 @@ function appendFoot() {
   const tableFooterElement = document.querySelector('tfoot');
   const footElement = `<tr>
     <td colspan="2"><b>Iš viso vartotojų:</b></td>
-    <td colspan="3">${totalUsers}</td>
+    <td colspan="4">${totalUsers}</td>
   </tr>`;
   tableFooterElement.innerHTML = footElement;
 }
