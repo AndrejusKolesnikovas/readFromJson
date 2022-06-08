@@ -1,106 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vartotojai</title>
     <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
-    crossorigin="anonymous"
-  />
-</head>
-<body>
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
     <div class="container mt-1">
-        <nav>
-          <a
-            class="btn btn-primary"
-            data-bs-toggle="collapse"
-            href="#addUsers"
-            role="button"
-            aria-expanded="false"
-            aria-controls="addUsers"
-          >
-            Pridėti naują vartotoją
-          </a>
-          <a
-            class="btn btn-primary"
-            data-bs-toggle="collapse"
-            href="#searchUsers"
-            role="button"
-            aria-expanded="false"
-            aria-controls="searchUsers"
-          >
-            Ieškoti vartotojų
-          </a>
-          <a id="sortBySurname" class="btn btn-primary">Rūšiuoti pagal pavardę</a>
-          <a id="sortByName" class="btn btn-primary">Rūšiuoti pagal vardą</a>
-        </nav>
-        <div id="addUsers" class="collapse">
-          <form>
-            <div class="mb-3">
-              <label for="vardas" class="form-label">Vardas</label>
-              <input type="text" name="vardas" id="vardas" class="form-control" />
-            </div>
-            <div class="mb-3">
-              <label for="pavarde" class="form-label">Pavardė</label>
-              <input
-                type="text"
-                name="pavarde"
-                id="pavarde"
-                class="form-control"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="valstybe" class="form-label">Valstybė</label>
-              <input
-                type="text"
-                name="valstybe"
-                id="valstybe"
-                class="form-control"
-              />
-            </div>
-            <button type="submit" class="btn btn-primary">Įvesti</button>
-          </form>
-        </div>
-        <div id="searchUsers" class="collapse">
-          <form>
-            <div class="mb-3">
-              <label for="paieska" class="form-label"
-                >Įveskite vardą arba pavardę</label
-              >
-              <input
-                type="text"
-                name="paieska"
-                id="paieska"
-                class="form-control"
-              />
-            </div>
-            <button type="submit" class="btn btn-primary">Ieškoti</button>
-          </form>
-          <div id="searchResults"></div>
-        </div>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Vardas</th>
-              <th scope="col">Pavardė</th>
-              <th scope="col">Valstybė</th>
-              <th scope="col">Įvedimo data</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-          <tfoot></tfoot>
-        </table>
+      <nav>
+        <a
+          class="btn btn-primary"
+          data-bs-toggle="collapse"
+          href="#addUsers"
+          role="button"
+          aria-expanded="false"
+          aria-controls="addUsers"
+        >
+          Pridėti naują vartotoją
+        </a>
+        <a
+          class="btn btn-primary"
+          data-bs-toggle="collapse"
+          href="#searchUsers"
+          role="button"
+          aria-expanded="false"
+          aria-controls="searchUsers"
+        >
+          Ieškoti vartotojų
+        </a>
+        <a id="sortBySurname" class="btn btn-primary">Rūšiuoti pagal pavardę</a>
+        <a id="sortByName" class="btn btn-primary">Rūšiuoti pagal vardą</a>
+        <a id="getByMinMaxAge" class="btn btn-primary"
+          >Išvesti jauniausią/vyriausią</a
+        >
+      </nav>
+      <div id="addUsers" class="collapse">
+        <form>
+          <div class="mb-3">
+            <label for="vardas" class="form-label">Vardas</label>
+            <input
+              type="text"
+              name="vardas"
+              id="vardas"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="pavarde" class="form-label">Pavardė</label>
+            <input
+              type="text"
+              name="pavarde"
+              id="pavarde"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="gimimodata" class="form-label">Gimimo data</label>
+            <input
+              type="date"
+              name="gimimodata"
+              id="gimimodata"
+              class="form-control"
+              required
+            />
+          </div>
+          <div id="valstybeWrapper" class="mb-3">
+            <label for="valstybe" class="form-label">Valstybė</label>
+            <!-- <input
+              type="text"
+              name="valstybe"
+              id="valstybe"
+              class="form-control"
+              required
+            /> -->
+          </div>
+          <button type="submit" class="btn btn-primary">Įvesti</button>
+        </form>
       </div>
+      <div id="searchUsers" class="collapse">
+        <form>
+          <div class="mb-3">
+            <label for="paieska" class="form-label"
+              >Įveskite vardą arba pavardę</label
+            >
+            <input
+              type="text"
+              name="paieska"
+              id="paieska"
+              class="form-control"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">Ieškoti</button>
+        </form>
+        <div id="searchResults"></div>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Vardas</th>
+            <th scope="col">Pavardė</th>
+            <th scope="col">Amžius</th>
+            <th scope="col">Valstybė</th>
+            <th scope="col">Įvedimo data</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot></tfoot>
+      </table>
+    </div>
     <script type="module" src="main.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
       crossorigin="anonymous"
     ></script>
-</body>
+  </body>
 </html>

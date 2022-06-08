@@ -31,7 +31,7 @@ export const addUser = (data) =>
   });
 
 // export const getUsers = () => {
-//     return await fetch(usersData).then((response) => {
+//     return fetch(usersData).then((response) => {
 //         if(!response.ok) {
 //             throw new Error('Įvyko klaida: ' + response.status)
 //         }

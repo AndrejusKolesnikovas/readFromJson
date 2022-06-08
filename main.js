@@ -1,7 +1,7 @@
 'use strict';
 
 import { getUsers, addUser } from './src/users.js';
-import { getCountry } from './src/countries.js';
+import { getCountry, getAllCountries } from './src/countries.js';
 
 const tableBodyElement = document.querySelector('tbody');
 const addUsersForm = document.querySelector('#addUsers form');
@@ -9,6 +9,7 @@ const searchResultsElement = document.querySelector('#searchResults');
 const searchUsersForm = document.querySelector('#searchUsers form');
 const sortBySurname = document.querySelector('#sortBySurname');
 const sortByName = document.querySelector('#sortByName');
+const getByMinMaxAge = document.querySelector('#getByMinMaxAge');
 
 let users = [];
 
@@ -23,6 +24,8 @@ sortByName.addEventListener('click', () => {
   sortBy('name');
   arrangeData();
 });
+
+getByMinMaxAge.addEventListener('click', getMinMaxAge);
 
 initDocument();
 
@@ -40,6 +43,7 @@ function initDocument() {
     let promises = data.map((user) =>
       getCountry(user.country).then((country) => {
         user.countryData = country[0];
+        user.age = getAge(user.birthday);
         return user;
       })
     );
@@ -49,6 +53,8 @@ function initDocument() {
       appendFoot();
     });
   });
+
+  getAllCountries().then((data) => displayCountriesSelector(data));
 }
 
 // function arrangeData() {
@@ -81,6 +87,7 @@ function arrangeData() {
           <td>${user.id}</td>
           <td>${user.name}</td>
           <td>${user.surname}</td>
+          <td>${user.age}</td>
           <td><img src="${user.countryData.flags.png}" alt="${
         user.countryData.flag
       }" width="30"> ${user.country}, ${user.countryData.capital}</td>
@@ -95,7 +102,9 @@ function addNewElement(event) {
   event.preventDefault();
   const name = addUsersForm.querySelector('#vardas');
   const surname = addUsersForm.querySelector('#pavarde');
+  // const country = addUsersForm.querySelector('#valstybe');
   const country = addUsersForm.querySelector('#valstybe');
+  const birthday = addUsersForm.querySelector('#gimimodata');
   const newId = getNewId();
   const newDate = new Date();
 
@@ -103,6 +112,7 @@ function addNewElement(event) {
     id: newId,
     name: name.value,
     surname: surname.value,
+    birthday: birthday.value,
     country: country.value,
     added: newDate,
   };
@@ -171,5 +181,41 @@ function sortBy(value) {
       return 1;
     }
     return 0;
+  }
+}
+
+function getAge(birthday) {
+  let today = new Date();
+  return today.getFullYear() - new Date(birthday).getFullYear();
+}
+
+function getMinMaxAge() {
+  const minValue = users.reduce(
+    (min, curentValue) => Math.min(min, curentValue.age),
+    users[0].age
+  );
+  console.log(minValue);
+  const maxValue = users.reduce(
+    (max, curentValue) => Math.max(max, curentValue.age),
+    users[0].age
+  );
+  console.log(maxValue);
+}
+
+//ši funkcija patikrina ar dar nėra šalių selectoriaus ir jeigu nėra, jį sukuria, užpildydamą kiekvieną option value su šalies pavadinimu, kuris gaunamas iš getAllCountries
+function displayCountriesSelector(countriesArray) {
+  if (!document.querySelector('#valstybeWrapper select')) {
+    const valstybeWrapper = document.querySelector('#valstybeWrapper');
+    let selectList = document.createElement('select');
+    selectList.id = 'valstybe';
+    selectList.classList.add('form-select');
+    valstybeWrapper.appendChild(selectList);
+
+    countriesArray.forEach((country) => {
+      let option = document.createElement('option');
+      option.value = country.name.common;
+      option.text = country.name.common;
+      selectList.appendChild(option);
+    });
   }
 }
