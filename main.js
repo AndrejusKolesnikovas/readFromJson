@@ -9,10 +9,12 @@ const searchResultsElement = document.querySelector('#searchResults');
 const searchUsersForm = document.querySelector('#searchUsers form');
 const sortBySurname = document.querySelector('#sortBySurname');
 const sortByName = document.querySelector('#sortByName');
+const getByMinMaxAge = document.querySelector('#getByMinMaxAge');
 
 let users = [];
 
 addUsersForm.addEventListener('submit', addNewElement);
+getByMinMaxAge.addEventListener('click', getMinMaxAge);
 searchUsersForm.addEventListener('submit', searchUsers);
 sortBySurname.addEventListener('click', () => {
   sortBy('surname');
@@ -37,12 +39,15 @@ initDocument();
 //initDoc perrašytas, įtraukiant duomenų sumappinimą nuskaitant userius
 function initDocument() {
   getUsers().then((data) => {
-    let promises = data.map((user) =>
+    let promises = data.map((user) => 
+      
       getCountry(user.country).then((country) => {
         user.countryData = country[0];
+        user.age = getAge(user.birthday);
         return user;
       })
     );
+ 
     Promise.all(promises).then((result) => {
       users = result;
       arrangeData();
@@ -50,6 +55,22 @@ function initDocument() {
     });
   });
 }
+// function initDocument() {
+//   getUsers().then((data) => {
+//     let promises = data.map((user) =>
+//       getCountry(user.country).then((country) => {
+//         user.countryData = country[0];
+//         return user;
+//       })
+//     );
+//     Promise.all(promises).then((result) => {
+//       users = result;
+//       console.log(users)
+//       arrangeData();
+//       appendFoot();
+//     });
+//   });
+// }
 
 // function arrangeData() {
 //   let usersElements = '';
@@ -77,10 +98,13 @@ function arrangeData() {
   let usersElements = '';
   users.forEach((user) => {
     if (user.country) {
+      // const age = getAge(user.birthday);
       usersElements += `<tr>
           <td>${user.id}</td>
           <td>${user.name}</td>
           <td>${user.surname}</td>
+          <td>${user.country}</td>
+          <td>${user.age}</td>
           <td><img src="${user.countryData.flags.png}" alt="${
         user.countryData.flag
       }" width="30"> ${user.country}, ${user.countryData.capital}</td>
@@ -96,6 +120,7 @@ function addNewElement(event) {
   const name = addUsersForm.querySelector('#vardas');
   const surname = addUsersForm.querySelector('#pavarde');
   const country = addUsersForm.querySelector('#valstybe');
+  const birthday = addUsersForm.querySelector('#gimimodata');
   const newId = getNewId();
   const newDate = new Date();
 
@@ -104,6 +129,7 @@ function addNewElement(event) {
     name: name.value,
     surname: surname.value,
     country: country.value,
+    birthday: birthday.value,
     added: newDate,
   };
 
@@ -173,3 +199,15 @@ function sortBy(value) {
     return 0;
   }
 }
+
+function getAge(birthday){
+  const today = new Date();
+  return today.getFullYear() - (new Date(birthday)).getFullYear();
+};
+
+function getMinMaxAge(){
+  const minValue = users.reduce((min, curentValue) => Math.min(min, curentValue.age), users[0].age);
+  const maxValue = users.reduce((max, curentValue) => Math.max(max, curentValue.age), users[0].age);
+  console.log(minValue);
+  console.log(maxValue);
+};

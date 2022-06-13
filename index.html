@@ -37,16 +37,18 @@
           </a>
           <a id="sortBySurname" class="btn btn-primary">Rūšiuoti pagal pavardę</a>
           <a id="sortByName" class="btn btn-primary">Rūšiuoti pagal vardą</a>
+          <a id="getByMinMaxAge" class="btn btn-primary">Išvesti vyriausia ir jauniausia</a>
         </nav>
         <div id="addUsers" class="collapse">
           <form>
             <div class="mb-3">
               <label for="vardas" class="form-label">Vardas</label>
-              <input type="text" name="vardas" id="vardas" class="form-control" />
+              <input type="text" name="vardas" id="vardas" class="form-control" required/>
             </div>
             <div class="mb-3">
               <label for="pavarde" class="form-label">Pavardė</label>
               <input
+              required
                 type="text"
                 name="pavarde"
                 id="pavarde"
@@ -56,9 +58,20 @@
             <div class="mb-3">
               <label for="valstybe" class="form-label">Valstybė</label>
               <input
+              required
                 type="text"
                 name="valstybe"
                 id="valstybe"
+                class="form-control"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="gimimodata" class="form-label">Gimimo data</label>
+              <input
+              required
+                type="date"
+                name="gimimodata"
+                id="gimimodata"
                 class="form-control"
               />
             </div>
@@ -89,6 +102,7 @@
               <th scope="col">Vardas</th>
               <th scope="col">Pavardė</th>
               <th scope="col">Valstybė</th>
+              <th scope="col">Amžius</th>
               <th scope="col">Įvedimo data</th>
             </tr>
           </thead>
